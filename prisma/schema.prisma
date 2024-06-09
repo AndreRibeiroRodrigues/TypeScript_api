@@ -3,13 +3,17 @@
 
 generator client {
   provider = "prisma-client-js"
+  binaryTargets = ["native", "debian-openssl-1.1.x"]
 }
 
 model User {
-  id    Int     @id @default(autoincrement())
-  email String  @unique
-  name  String?
-  posts Post[]
+  id       Int     @id @default(autoincrement())
+  email    String  @unique
+  name     String?
+  password String @default("123logar")
+  posts    Post[]
+  comments  Comment[]
+
 }
 
 model Post {
@@ -19,9 +23,20 @@ model Post {
   published Boolean @default(false)
   author    User    @relation(fields: [authorId], references: [id])
   authorId  Int
+  comments  Comment[]
+
+}
+
+model Comment {
+  id        Int       @id @default(autoincrement())
+  content   String
+  post      Post      @relation(fields: [postId], references: [id])
+  postId    Int
+  author    User      @relation(fields: [authorId], references: [id])
+  authorId  Int
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "mysql"
   url      = env("DATABASE_URL")
 }

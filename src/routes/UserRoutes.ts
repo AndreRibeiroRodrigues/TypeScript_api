@@ -3,7 +3,9 @@ import UserController from "../controllers/UserController";
 
 const UserRouter = Router();
 
-UserRouter.get("/api/users", UserController.listUsers);
+UserRouter.get("/api/users", UserController.getUsers);
+
+UserRouter.get("/api/userById/:id", UserController.getUserById);
 
 UserRouter.post("/api/user", UserController.createUser);
 

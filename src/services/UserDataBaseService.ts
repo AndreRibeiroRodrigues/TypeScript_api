@@ -5,12 +5,28 @@ const prisma = new PrismaClient();
 class UserDataBaseService {
   constructor() {}
 
-  async listDBUsers() {
+  async getUsers() {
     try {
       return await prisma.user.findMany();
-    } catch (error) {
-      console.log(error);
+    } catch (e) {
+      console.log(e);
       return null;
+    }
+  }
+  async getUserById(id: number){
+    try {
+      const user = await prisma.user.findMany({
+        select: {
+          name: true,
+          email: true
+        },
+        where: {
+          id: id
+        }
+        })
+      return user;
+    } catch (e) {
+      console.log(e);
     }
   }
 
@@ -20,8 +36,8 @@ class UserDataBaseService {
         data: user,
       });
       return newuser;
-    } catch (error) {
-      console.log(error);
+    } catch (e) {
+      console.log(e);
       return null;
     }
   }
@@ -35,8 +51,8 @@ class UserDataBaseService {
         },
       });
       return updatedUser;
-    } catch (error) {
-      console.log(error);
+    } catch (e) {
+      console.log(e);
       return null;
     }
   }
@@ -49,8 +65,8 @@ class UserDataBaseService {
         },
       });
       return true;
-    } catch (error) {
-      console.log(error);
+    } catch (e) {
+      console.log(e);
       return null;
     }
   }

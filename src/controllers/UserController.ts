@@ -2,11 +2,20 @@ import { Request, Response } from "express";
 import UserDataBaseService from "../services/UserDataBaseService";
 
 class UserController {
-  constructor() {}
-
-  async listUsers(req: Request, res: Response) {
+  async getUserById(req: Request, res: Response) {
+    const id = req.params.id;
     try {
-      const users = await UserDataBaseService.listDBUsers();
+      const user = await UserDataBaseService.getUserById(parseInt(id));
+      return res.status(200).json({ status: 200, user: user })
+    } catch (error) {
+      return res.status(401).json({ status: 400, error: error })
+
+    }
+  }
+
+  async getUsers(req: Request, res: Response) {
+    try {
+      const users = await UserDataBaseService.getUsers();
       res.json({
         status: "ok",
         users: users,

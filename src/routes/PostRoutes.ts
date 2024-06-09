@@ -3,7 +3,7 @@ import PostController from "../controllers/PostController";
 
 const PostRouter = Router();
 
-PostRouter.get("/api/posts", PostController.listPosts);
+PostRouter.get("/api/posts", PostController.getPosts);
 
 PostRouter.post("/api/post", PostController.createPost);
 

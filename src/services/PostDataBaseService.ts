@@ -5,7 +5,7 @@ const prisma = new PrismaClient();
 class PostDataBaseService {
   constructor() {}
 
-  async listDBPosts() {
+  async getPosts() {
     try {
       return await prisma.post.findMany();
     } catch (error) {

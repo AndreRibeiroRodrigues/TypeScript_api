@@ -4,9 +4,9 @@ import PostDataBaseService from "../services/PostDataBaseService";
 class PostController {
   constructor() {}
 
-  async listPosts(req: Request, res: Response) {
+  async getPosts(req: Request, res: Response) {
     try {
-      const posts = await PostDataBaseService.listDBPosts();
+      const posts = await PostDataBaseService.getPosts();
       res.json({
         status: "ok",
         posts: posts,
