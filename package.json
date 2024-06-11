@@ -6,7 +6,7 @@
   
   "scripts": {
     "build": "tsc",
-    "start": "node build/server.js",
+    "start": "npx tsc && node build/server.js",
     "dev": "ts-node src/server.ts"
   },
   "repository": {

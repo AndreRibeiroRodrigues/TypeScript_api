@@ -13,12 +13,12 @@ COPY .env ./
 # Instala as dependências do projeto
 RUN npm install
 RUN npx prisma generate
+RUN npm run build
 
 # Copia o restante do código da aplicação para o contêiner
 COPY . .
 
 # Compila o TypeScript para JavaScript
-RUN npm run build
 
 # Expõe a porta que a aplicação vai rodar
 EXPOSE 3000

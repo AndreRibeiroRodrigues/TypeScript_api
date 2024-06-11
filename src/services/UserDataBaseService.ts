@@ -15,10 +15,11 @@ class UserDataBaseService {
   }
   async getUserById(id: number){
     try {
-      const user = await prisma.user.findMany({
+      const user = await prisma.user.findUnique({
         select: {
           name: true,
-          email: true
+          email: true,
+          password: true
         },
         where: {
           id: id
