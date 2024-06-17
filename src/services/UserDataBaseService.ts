@@ -14,22 +14,23 @@ class UserDataBaseService {
     }
   }
   async getUserById(id: number){
+    console.log(id)
     try {
       const user = await prisma.user.findUnique({
+        where: { id },
         select: {
           name: true,
           email: true,
-          password: true
         },
-        where: {
-          id: id
-        }
-        })
+      });
+
       return user;
-    } catch (e) {
-      console.log(e);
+    } catch (error) {
+      console.error("Error fetching user:", error); 
+      return null; 
     }
   }
+
 
   async insertDBUser(user: Prisma.UserCreateInput) {
     try {

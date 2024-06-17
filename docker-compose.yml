@@ -2,9 +2,7 @@ version: '3.8'
 
 services:
   api:
-    build:
-      dockerfile: dockerfile
-    
+    build: .
     ports:
       - "3000:3000"
     volumes:
@@ -26,16 +24,6 @@ services:
       - db_data:/var/lib/mysql
     ports:
       - "3306:3306"
-
-  phpmyadmin:
-    image: phpmyadmin/phpmyadmin
-    restart: always
-    ports:
-      - "8081:80"
-    environment:
-      PHP_HOST: db
-      MYSQL_ROOT_PASSWORD: rootpassword
-
 volumes:
   db_data:
   portainer_data:

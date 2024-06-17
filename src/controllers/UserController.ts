@@ -4,6 +4,7 @@ import UserDataBaseService from "../services/UserDataBaseService";
 class UserController {
   async getUserById(req: Request, res: Response) {
     const id = req.params.id;
+    console.log(id)
     try {
       const user = await UserDataBaseService.getUserById(parseInt(id));
       return res.status(200).json({ status: 200, user: user })
