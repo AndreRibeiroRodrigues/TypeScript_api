@@ -1,21 +1,13 @@
 import { Request, Response } from "express";
-import UserDataBaseService from "../services/UserDataBaseService";
+import UserDataBaseService from "../services/UserService";
+import { hashPassword } from '../utils/Bcrypt';
 
 class UserController {
-  async getUserById(req: Request, res: Response) {
-    const id = req.params.id;
-    try {
-      const user = await UserDataBaseService.getUserById(parseInt(id));
-      return res.status(200).json({ status: 200, user: user })
-    } catch (error) {
-      return res.status(401).json({ status: 400, error: error })
+  constructor() {}
 
-    }
-  }
-
-  async getUsers(req: Request, res: Response) {
+  async readUsers(req: Request, res: Response) {
     try {
-      const users = await UserDataBaseService.getUsers();
+      const users = await UserDataBaseService.readUsers();
       res.json({
         status: "ok",
         users: users,
@@ -39,11 +31,12 @@ class UserController {
         message: "Falta parâmetros",
       });
     }
-
     try {
-      const newuser = await UserDataBaseService.insertDBUser({
+      const hashedPassword = await hashPassword(req.body.password);
+      const newuser = await UserDataBaseService.createUser({
         name: body.name,
         email: body.email,
+        password: hashedPassword,
       });
       res.json({
         status: "ok",
@@ -75,7 +68,7 @@ class UserController {
     }
 
     try {
-      const updatedUser = await UserDataBaseService.updateDBUser(
+      const updatedUser = await UserDataBaseService.updateUser(
         {
           name: name,
           email: email,
@@ -104,7 +97,7 @@ class UserController {
     }
 
     try {
-      const response = await UserDataBaseService.deleteDBUser(parseInt(id));
+      const response = await UserDataBaseService.deleteUser(parseInt(id));
       if (response) {
         res.json({
           status: "ok",

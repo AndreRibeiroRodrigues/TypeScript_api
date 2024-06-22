@@ -1,12 +1,12 @@
 import { Request, Response } from "express";
-import PostDataBaseService from "../services/PostDataBaseService";
+import PostDataBaseService from "../services/PostService";
 
 class PostController {
   constructor() {}
 
-  async getPosts(req: Request, res: Response) {
+  async readPosts(req: Request, res: Response) {
     try {
-      const posts = await PostDataBaseService.getPosts();
+      const posts = await PostDataBaseService.readPosts();
       res.json({
         status: "ok",
         posts: posts,
@@ -32,11 +32,11 @@ class PostController {
     }
 
     try {
-      const newPost = await PostDataBaseService.insertDBPost({
+      const newPost = await PostDataBaseService.createPost({
         title: body.title,
         content: body.content,
         published: body.published || false,
-        author: { connect: { id: parseInt(body.authorId) } }, 
+        author: { connect: { id: parseInt(body.authorId) } },
       });
       res.json({
         status: "ok",
@@ -72,7 +72,7 @@ class PostController {
     }
 
     try {
-      const updatedPost = await PostDataBaseService.updateDBPost(
+      const updatedPost = await PostDataBaseService.updatePost(
         {
           title: title,
           content: content,
@@ -105,7 +105,7 @@ class PostController {
     }
 
     try {
-      const response = await PostDataBaseService.deleteDBPost(parseInt(id));
+      const response = await PostDataBaseService.deletePost(parseInt(id));
       if (response) {
         res.json({
           status: "ok",

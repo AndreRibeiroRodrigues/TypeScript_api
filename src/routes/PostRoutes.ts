@@ -1,14 +1,15 @@
 import { Router } from "express";
 import PostController from "../controllers/PostController";
+import { authenticate } from "../middlewares/MiddlewareAutenticacao";
 
 const PostRouter = Router();
 
-PostRouter.get("/api/posts", PostController.getPosts);
+PostRouter.get("/api/post/get", authenticate, PostController.listPosts);
 
-PostRouter.post("/api/post", PostController.createPost);
+PostRouter.post("/api/post/post", PostController.createPost);
 
-PostRouter.patch("/api/post/:id", PostController.updatePost);
+PostRouter.patch("/api/post/upadate/:id", PostController.updatePost);
 
-PostRouter.delete("/api/post/:id", PostController.deletePost);
+PostRouter.delete("/api/post/delete/:id", PostController.deletePost);
 
 export default PostRouter;

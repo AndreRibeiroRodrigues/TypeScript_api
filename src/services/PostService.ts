@@ -5,7 +5,7 @@ const prisma = new PrismaClient();
 class PostDataBaseService {
   constructor() {}
 
-  async getPosts() {
+  async readPosts() {
     try {
       return await prisma.post.findMany();
     } catch (error) {
@@ -14,7 +14,7 @@ class PostDataBaseService {
     }
   }
 
-  async insertDBPost(post: Prisma.PostCreateInput) {
+  async createPost(post: Prisma.PostCreateInput) {
     try {
       const newPost = await prisma.post.create({
         data: post,
@@ -26,7 +26,7 @@ class PostDataBaseService {
     }
   }
 
-  async updateDBPost(post: Prisma.PostUpdateInput, id: number) {
+  async updatePost(post: Prisma.PostUpdateInput, id: number) {
     try {
       const updatedPost = await prisma.post.update({
         data: post,
@@ -41,7 +41,7 @@ class PostDataBaseService {
     }
   }
 
-  async deleteDBPost(id: number) {
+  async deletePost(id: number) {
     try {
       await prisma.post.delete({
         where: {

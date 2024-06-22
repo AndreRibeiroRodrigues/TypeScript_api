@@ -1,10 +1,10 @@
 import { Request, Response } from "express";
-import CommentService from "../services/CommentService";
+import CommentDataBaseService from "../services/CommentService";
 
 class CommentController {
-  async getAllComment(req: Request, res: Response) {
+  async readComments(req: Request, res: Response) {
     try {
-      const comments = await CommentService.getComments();
+      const comments = await CommentDataBaseService.readComments();
       res.json({
         status: "ok",
         comments,
@@ -29,7 +29,7 @@ class CommentController {
     }
 
     try {
-      const newComment = await CommentService.insertComment({
+      const newComment = await CommentDataBaseService.createComment({
         content,
         post: { connect: { id: postId } },
         author: { connect: { id: authorId } },
@@ -59,7 +59,7 @@ class CommentController {
     }
 
     try {
-      const updatedComment = await CommentService.updateComment(
+      const updatedComment = await CommentDataBaseService.updateComment(
         {
           content,
           post: { connect: { id: postId } },
@@ -78,7 +78,7 @@ class CommentController {
       });
     }
   }
-
+  
   async deleteComment(req: Request, res: Response) {
     const id = req.params.id;
 
@@ -91,13 +91,13 @@ class CommentController {
     }
 
     try {
-      const response = await CommentService.deleteComment(
-        parseInt(id)
-      );
+      const response = await CommentDataBaseService.deleteComment(parseInt(id));
+      if (response){
       res.json({
         status: "ok",
         message: "Comentário deletado com sucesso",
       });
+    }
     } catch (error: any) {
       res.json({
         status: "error",

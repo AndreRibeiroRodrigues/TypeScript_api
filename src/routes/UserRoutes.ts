@@ -1,16 +1,15 @@
 import { Router } from "express";
 import UserController from "../controllers/UserController";
+import { authenticate } from "../middlewares/MiddlewareAutenticacao";
 
 const UserRouter = Router();
 
-UserRouter.get("/api/users", UserController.getUsers);
+UserRouter.get("/api/user/get", authenticate, UserController.readUsers);
 
-UserRouter.get("/api/userById/:id", UserController.getUserById);
+UserRouter.post("/api/user/post", UserController.createUser);
 
-UserRouter.post("/api/user", UserController.createUser);
+UserRouter.patch("/api/user/update/:id", UserController.updateUser);
 
-UserRouter.patch("/api/user/:id", UserController.updateUser);
-
-UserRouter.delete("/api/user/:id", UserController.deleteUser);
+UserRouter.delete("/api/user/delete/:id", UserController.deleteUser);
 
 export default UserRouter;

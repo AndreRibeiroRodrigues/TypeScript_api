@@ -5,45 +5,28 @@ const prisma = new PrismaClient();
 class UserDataBaseService {
   constructor() {}
 
-  async getUsers() {
+  async readUsers() {
     try {
       return await prisma.user.findMany();
-    } catch (e) {
-      console.log(e);
+    } catch (error) {
+      console.log(error);
       return null;
     }
   }
-  async getUserById(id: number){
-    try {
-      const user = await prisma.user.findUnique({
-        select: {
-          name: true,
-          email: true,
-          password: true
-        },
-        where: {
-          id: id
-        }
-        })
-      return user;
-    } catch (e) {
-      console.log(e);
-    }
-  }
 
-  async insertDBUser(user: Prisma.UserCreateInput) {
+  async createUser(user: Prisma.UserCreateInput) {
     try {
       const newuser = await prisma.user.create({
         data: user,
       });
       return newuser;
-    } catch (e) {
-      console.log(e);
+    } catch (error) {
+      console.log(error);
       return null;
     }
   }
 
-  async updateDBUser(user: Prisma.UserUpdateInput, id: number) {
+  async updateUser(user: Prisma.UserUpdateInput, id: number) {
     try {
       const updatedUser = await prisma.user.update({
         data: user,
@@ -52,13 +35,13 @@ class UserDataBaseService {
         },
       });
       return updatedUser;
-    } catch (e) {
-      console.log(e);
+    } catch (error) {
+      console.log(error);
       return null;
     }
   }
 
-  async deleteDBUser(id: number) {
+  async deleteUser(id: number) {
     try {
       await prisma.user.delete({
         where: {
@@ -66,8 +49,8 @@ class UserDataBaseService {
         },
       });
       return true;
-    } catch (e) {
-      console.log(e);
+    } catch (error) {
+      console.log(error);
       return null;
     }
   }
