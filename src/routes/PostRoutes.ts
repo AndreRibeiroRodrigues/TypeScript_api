@@ -4,7 +4,7 @@ import { authenticate } from "../middlewares/MiddlewareAutenticacao";
 
 const PostRouter = Router();
 
-PostRouter.get("/api/post/get", authenticate, PostController.listPosts);
+PostRouter.get("/api/post/get", authenticate, PostController.readPosts);
 
 PostRouter.post("/api/post/post", PostController.createPost);
 

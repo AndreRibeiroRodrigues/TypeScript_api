@@ -4,7 +4,7 @@ import { authenticate } from "../middlewares/MiddlewareAutenticacao";
 
 const CommentRouter = Router();
 
-CommentRouter.get("/api/comment/get", authenticate, CommentController.listComments);
+CommentRouter.get("/api/comment/get", authenticate, CommentController.readComments);
 
 CommentRouter.post("/api/comment/post", CommentController.createComment);
 
